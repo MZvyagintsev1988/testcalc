@@ -41,6 +41,9 @@ travis_after_success() {
     pvs-studio-analyzer credentials $PVS_USERNAME $PVS_KEY -o PVS-Studio.lic
     if [ "$TRAVIS_PULL_REQUEST" != "false" ]; then
       git diff --name-only HEAD $(git merge-base HEAD $TRAVIS_BRANCH) > .pvs-pr.list
+      echo "test"
+      cat .pvs-pr.list
+      echo "test"
       pvs-studio-analyzer analyze -j8 -l PVS-Studio.lic -S .pvs-pr.list -o PVS-Studio-${CC}.log --disableLicenseExpirationCheck
     else
       pvs-studio-analyzer analyze -j8 -l PVS-Studio.lic -o PVS-Studio-${CC}.log --disableLicenseExpirationCheck
