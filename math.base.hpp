@@ -29,6 +29,8 @@
 
 #include <iostream>
 
+#include <algorithm>
+
 #include "math.util.hpp"
 
 namespace math {
