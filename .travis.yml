@@ -1,0 +1,31 @@
+# https://travis-ci.org
+
+language: cpp
+dist: xenial
+
+addons:
+  apt:
+    update: true
+    packages:
+      - build-essential
+      - cmake
+
+matrix:
+  include:
+    - os: linux
+      compiler: "gcc"
+      env: PVS_ANALYZE=Yes
+    - os: linux
+      compiler: "clang"
+
+before_install:
+  - travis_retry bash .travis.sh travis_before_install
+
+install:
+  - travis_retry bash .travis.sh travis_install
+
+script:
+  - bash .travis.sh travis_script
+
+after_success:
+  - bash .travis.sh travis_after_success
