@@ -46,7 +46,7 @@ travis_after_success() {
       pvs-studio-analyzer analyze -j8 -l PVS-Studio.lic -o PVS-Studio-${CC}.log --disableLicenseExpirationCheck
     fi
     
-    plog-converter -t html PVS-Studio-${CC}.log -o PVS-Studio-${CC}.html
+    RESULT=`plog-converter -t html PVS-Studio-${CC}.log -o PVS-Studio-${CC}.html`
     sendemail -t zvyagintsev@viva64.com \
               -u "PVS-Studio $CC report, commit:$TRAVIS_COMMIT" \
               -m "PVS-Studio $CC report, commit:$TRAVIS_COMMIT" \
@@ -56,6 +56,7 @@ travis_after_success() {
               -o tls=yes \
               -f $MAIL_USER \
               -a PVS-Studio-${CC}.log PVS-Studio-${CC}.html
+    return RESULT
   fi
 }
 
