@@ -22,7 +22,7 @@ travis_install() {
     sudo apt-get install -qq strace sendemail libio-socket-ssl-perl libnet-ssleay-perl
     
     wget -q http://files.viva64.com/beta/pvs-studio-7.04.34029.84-amd64.deb
-    sudo dpkg --install pvs-studio-7.03.34029.84-amd64.deb
+    sudo dpkg --install pvs-studio-7.04.34029.84-amd64.deb
   fi
 }
 
