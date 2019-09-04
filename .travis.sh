@@ -34,11 +34,10 @@ travis_script() {
   
   cmake $CMAKE_ARGS CMakeLists.txt
   make -j8
-}
-
-travis_after_success() {
+  
   if [ "$PVS_ANALYZE" = "Yes" ]; then
     pvs-studio-analyzer credentials $PVS_USERNAME $PVS_KEY -o PVS-Studio.lic
+    
     if [ "$TRAVIS_PULL_REQUEST" != "false" ]; then
       git diff --name-only HEAD $(git merge-base HEAD $TRAVIS_BRANCH) > .pvs-pr.list
       pvs-studio-analyzer analyze -j8 -l PVS-Studio.lic -S .pvs-pr.list -o PVS-Studio-${CC}.log --disableLicenseExpirationCheck
@@ -46,7 +45,7 @@ travis_after_success() {
       pvs-studio-analyzer analyze -j8 -l PVS-Studio.lic -o PVS-Studio-${CC}.log --disableLicenseExpirationCheck
     fi
     
-    plog-converter -t html PVS-Studio-${CC}.log -o PVS-Studio-${CC}.html
+    plog-converter -t html PVS-Studio-${CC}.log -o PVS-Studio-${CC}.html -w
     sendemail -t zvyagintsev@viva64.com \
               -u "PVS-Studio $CC report, commit:$TRAVIS_COMMIT" \
               -m "PVS-Studio $CC report, commit:$TRAVIS_COMMIT" \
@@ -56,8 +55,6 @@ travis_after_success() {
               -o tls=yes \
               -f $MAIL_USER \
               -a PVS-Studio-${CC}.log PVS-Studio-${CC}.html
-    echo $?
-    echo "TEST"
   fi
 }
 
