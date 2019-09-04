@@ -11,7 +11,8 @@ addons:
       - cmake
 
 cache:
-  - .PVS-Studio/
+    directories:
+     - /home/travis/.PVS-Studio/
 
 matrix:
   include:
