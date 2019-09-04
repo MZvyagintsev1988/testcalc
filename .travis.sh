@@ -40,7 +40,7 @@ travis_script() {
     
     if [ "$TRAVIS_PULL_REQUEST" != "false" ]; then
       git diff --name-only HEAD $(git merge-base HEAD $TRAVIS_BRANCH) > .pvs-pr.list
-      pvs-studio-analyzer analyze -j8 -S .pvs-pr.list -o PVS-Studio-${CC}.log --disableLicenseExpirationCheck
+      pvs-studio-analyzer analyze -j8 -o PVS-Studio-${CC}.log --disableLicenseExpirationCheck -S .pvs-pr.list
     else
       pvs-studio-analyzer analyze -j8 -o PVS-Studio-${CC}.log --disableLicenseExpirationCheck
     fi
