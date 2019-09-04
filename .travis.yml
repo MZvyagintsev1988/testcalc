@@ -10,6 +10,9 @@ addons:
       - build-essential
       - cmake
 
+cache:
+  - .PVS-Studio/
+
 matrix:
   include:
     - os: linux
