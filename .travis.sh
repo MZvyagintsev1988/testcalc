@@ -58,7 +58,7 @@ travis_after_success() {
               -f $MAIL_USER \
               -a PVS-Studio-${CC}.log PVS-Studio-${CC}.html
     echo $RESULT
-    exit $RESULT
+    return $RESULT
   fi
 }
 
