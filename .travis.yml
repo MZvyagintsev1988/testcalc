@@ -33,3 +33,4 @@ script:
 
 after_failure:
   - bash .travis.sh travis_after_failure
+  
