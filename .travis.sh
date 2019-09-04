@@ -47,9 +47,6 @@ travis_after_success() {
     fi
     
     plog-converter -t html PVS-Studio-${CC}.log -o PVS-Studio-${CC}.html -w
-    echo "TEST"
-    RESULT=$?
-    echo $RESULT
     sendemail -t zvyagintsev@viva64.com \
               -u "PVS-Studio $CC report, commit:$TRAVIS_COMMIT" \
               -m "PVS-Studio $CC report, commit:$TRAVIS_COMMIT" \
@@ -60,7 +57,7 @@ travis_after_success() {
               -f $MAIL_USER \
               -a PVS-Studio-${CC}.log PVS-Studio-${CC}.html
     echo $RESULT
-    return $RESULT
+    echo "TEST"
   fi
 }
 
