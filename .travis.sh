@@ -46,7 +46,11 @@ travis_script() {
     fi
     
     plog-converter -t html PVS-Studio-${CC}.log -o PVS-Studio-${CC}.html -w
-    sendemail -t zvyagintsev@viva64.com \
+  fi
+}
+
+travis_after_failure() {
+  sendemail -t zvyagintsev@viva64.com \
               -u "PVS-Studio $CC report, commit:$TRAVIS_COMMIT" \
               -m "PVS-Studio $CC report, commit:$TRAVIS_COMMIT" \
               -s smtp.gmail.com:587 \
@@ -55,7 +59,6 @@ travis_script() {
               -o tls=yes \
               -f $MAIL_USER \
               -a PVS-Studio-${CC}.log PVS-Studio-${CC}.html
-  fi
 }
 
 set -e
