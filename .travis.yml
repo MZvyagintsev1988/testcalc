@@ -12,7 +12,7 @@ addons:
 
 cache:
     directories:
-     - /home/travis/.PVS-Studio/
+      - .PVS-Studio/
 
 matrix:
   include:
