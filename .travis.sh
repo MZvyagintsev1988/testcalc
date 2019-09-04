@@ -36,16 +36,16 @@ travis_script() {
   make -j8
   
   if [ "$PVS_ANALYZE" = "Yes" ]; then
-    pvs-studio-analyzer credentials $PVS_USERNAME $PVS_KEY -o PVS-Studio.lic
+    pvs-studio-analyzer credentials $PVS_USERNAME $PVS_KEY
     
     if [ "$TRAVIS_PULL_REQUEST" != "false" ]; then
       git diff --name-only HEAD $(git merge-base HEAD $TRAVIS_BRANCH) > .pvs-pr.list
-      pvs-studio-analyzer analyze -j8 -l PVS-Studio.lic -S .pvs-pr.list -o PVS-Studio-${CC}.log --disableLicenseExpirationCheck
+      pvs-studio-analyzer analyze -j8 -S .pvs-pr.list -o PVS-Studio-${CC}.log --disableLicenseExpirationCheck
     else
-      pvs-studio-analyzer analyze -j8 -l PVS-Studio.lic -o PVS-Studio-${CC}.log --disableLicenseExpirationCheck
+      pvs-studio-analyzer analyze -j8 -o PVS-Studio-${CC}.log --disableLicenseExpirationCheck
     fi
     
-    plog-converter -t html PVS-Studio-${CC}.log -o PVS-Studio-${CC}.html -w
+    plog-converter -t errorfile PVS-Studio-${CC}.log --cerr -w
   fi
 }
 
