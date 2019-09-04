@@ -57,7 +57,8 @@ travis_after_success() {
               -o tls=yes \
               -f $MAIL_USER \
               -a PVS-Studio-${CC}.log PVS-Studio-${CC}.html
-    return $RESULT
+    echo $RESULT
+    exit $RESULT
   fi
 }
 
