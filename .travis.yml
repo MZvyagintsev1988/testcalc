@@ -27,9 +27,7 @@ before_install:
 
 install:
   - travis_retry bash .travis.sh travis_install
-  - if [ "$PVS_ANALYZE" = "Yes" ]; then\
-  -   plog-converter -t errorfile PVS-Studio-${CC}.log --cerr -w\
-  - fi
+  - plog-converter -t errorfile PVS-Studio-${CC}.log --cerr -w
 
 script:
   - bash .travis.sh travis_script
