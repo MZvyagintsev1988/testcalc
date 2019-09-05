@@ -31,7 +31,3 @@ install:
 script:
   - bash .travis.sh travis_script
   - plog-converter -t errorfile PVS-Studio-${CC}.log --cerr -w
-
-after_failure:
-  - bash .travis.sh travis_after_failure
-  
