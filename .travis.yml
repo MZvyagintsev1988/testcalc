@@ -19,8 +19,6 @@ matrix:
     - os: linux
       compiler: "gcc"
       env: PVS_ANALYZE=Yes
-    - os: linux
-      compiler: "clang"
 
 before_install:
   - travis_retry bash .travis.sh travis_before_install
