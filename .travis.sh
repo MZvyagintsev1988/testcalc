@@ -44,8 +44,6 @@ travis_script() {
     else
       pvs-studio-analyzer analyze -j8 -o PVS-Studio-${CC}.log --disableLicenseExpirationCheck
     fi
-    
-    plog-converter -t errorfile PVS-Studio-${CC}.log --cerr -w
   fi
 }
 
