@@ -18,11 +18,13 @@ travis_install() {
   fi
   
   if [ "$PVS_ANALYZE" = "Yes" ]; then
-    sudo apt-get update -qq
-    sudo apt-get install -qq strace sendemail libio-socket-ssl-perl libnet-ssleay-perl
+    wget -q -O - https://files.viva64.com/etc/pubkey.txt \
+      | sudo apt-key add -
+    sudo wget -O /etc/apt/sources.list.d/viva64.list \
+      https://files.viva64.com/etc/viva64.list
     
-    wget -q http://files.viva64.com/beta/pvs-studio-7.04.34029.84-amd64.deb
-    sudo dpkg --install pvs-studio-7.04.34029.84-amd64.deb
+    sudo apt-get update -qq
+    sudo apt-get install -qq pvs-studio 
   fi
 }
 
@@ -44,19 +46,9 @@ travis_script() {
     else
       pvs-studio-analyzer analyze -j8 -o PVS-Studio-${CC}.log --disableLicenseExpirationCheck
     fi
+    
+  - plog-converter -t errorfile PVS-Studio-${CC}.log --cerr -w
   fi
-}
-
-travis_after_failure() {
-  sendemail -t zvyagintsev@viva64.com \
-              -u "PVS-Studio $CC report, commit:$TRAVIS_COMMIT" \
-              -m "PVS-Studio $CC report, commit:$TRAVIS_COMMIT" \
-              -s smtp.gmail.com:587 \
-              -xu $MAIL_USER \
-              -xp $MAIL_PASSWORD \
-              -o tls=yes \
-              -f $MAIL_USER \
-              -a PVS-Studio-${CC}.log PVS-Studio-${CC}.html
 }
 
 set -e
