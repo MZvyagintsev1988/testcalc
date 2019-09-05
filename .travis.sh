@@ -17,7 +17,6 @@ travis_install() {
     sudo apt-get install clang
   fi
   
-  echo $TRAVIS_PULL_REQUEST
   if [ "$PVS_ANALYZE" = "Yes" ]; then
     wget -q -O - https://files.viva64.com/etc/pubkey.txt \
       | sudo apt-key add -
