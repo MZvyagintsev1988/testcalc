@@ -9,14 +9,18 @@ addons:
     packages:
       - build-essential
       - cmake
+      - jq
+      - wget
+
+cache:
+    directories:
+      - .PVS-Studio/
 
 matrix:
   include:
     - os: linux
       compiler: "gcc"
       env: PVS_ANALYZE=Yes
-    - os: linux
-      compiler: "clang"
 
 before_install:
   - travis_retry bash .travis.sh travis_before_install
@@ -26,6 +30,3 @@ install:
 
 script:
   - bash .travis.sh travis_script
-
-after_success:
-  - bash .travis.sh travis_after_success

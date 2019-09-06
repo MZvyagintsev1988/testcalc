@@ -18,11 +18,13 @@ travis_install() {
   fi
   
   if [ "$PVS_ANALYZE" = "Yes" ]; then
-    sudo apt-get update -qq
-    sudo apt-get install -qq strace sendemail libio-socket-ssl-perl libnet-ssleay-perl
+    wget -q -O - https://files.viva64.com/etc/pubkey.txt \
+      | sudo apt-key add -
+    sudo wget -O /etc/apt/sources.list.d/viva64.list \
+      https://files.viva64.com/etc/viva64.list
     
-    wget -q http://files.viva64.com/beta/pvs-studio-7.03.34016.82-amd64.deb
-    sudo dpkg --install pvs-studio-7.03.34016.82-amd64.deb
+    sudo apt-get update -qq
+    sudo apt-get install -qq pvs-studio 
   fi
 }
 
@@ -34,29 +36,21 @@ travis_script() {
   
   cmake $CMAKE_ARGS CMakeLists.txt
   make -j8
-}
-
-travis_after_success() {
+  
   if [ "$PVS_ANALYZE" = "Yes" ]; then
-    pvs-studio-analyzer credentials $PVS_USERNAME $PVS_KEY -o PVS-Studio.lic
-    if [ "$TRAVIS_PULL_REQUEST" = "true" ]; then
-      git diff --name-only HEAD $(git merge-base HEAD $TRAVIS_BRANCH) > .pvs-pr.list
-      pvs-studio-analyzer analyze -j8 -l PVS-Studio.lic -S .pvs-pr.list -o PVS-Studio-${CC}.log --disableLicenseExpirationCheck
+    pvs-studio-analyzer credentials $PVS_USERNAME $PVS_KEY
+    
+    if [ "$TRAVIS_PULL_REQUEST" != "false" ]; then
+      PULL_REQUEST_ID="pulls/$TRAVIS_PULL_REQUEST"
+      MERGE_BASE=`wget -qO - https://api.github.com/repos/${TRAVIS_REPO_SLUG}/${PULL_REQUEST_ID} | jq -r ".base.sha"`
+
+      git diff --name-only HEAD $MERGE_BASE > .pvs-pr.list
+      pvs-studio-analyzer analyze -j8 -o PVS-Studio-${CC}.log --disableLicenseExpirationCheck -S .pvs-pr.list
     else
-      pvs-studio-analyzer analyze -j8 -l PVS-Studio.lic -o PVS-Studio-${CC}.log --disableLicenseExpirationCheck
+      pvs-studio-analyzer analyze -j8 -o PVS-Studio-${CC}.log --disableLicenseExpirationCheck
     fi
     
-    
-    plog-converter -t html PVS-Studio-${CC}.log -o PVS-Studio-${CC}.html
-    sendemail -t zvyagintsev@viva64.com \
-              -u "PVS-Studio $CC report, commit:$TRAVIS_COMMIT" \
-              -m "PVS-Studio $CC report, commit:$TRAVIS_COMMIT" \
-              -s smtp.gmail.com:587 \
-              -xu $MAIL_USER \
-              -xp $MAIL_PASSWORD \
-              -o tls=yes \
-              -f $MAIL_USER \
-              -a PVS-Studio-${CC}.log PVS-Studio-${CC}.html
+    plog-converter -t errorfile PVS-Studio-${CC}.log --cerr -w
   fi
 }
 
