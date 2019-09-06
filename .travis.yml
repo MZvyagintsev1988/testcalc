@@ -9,6 +9,8 @@ addons:
     packages:
       - build-essential
       - cmake
+      - jq
+      - wget
 
 cache:
     directories:
