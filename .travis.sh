@@ -1,6 +1,5 @@
 #/bin/bash
 
-
 download_extract() {
   aria2c -x 16 $1 -o $2
   tar -xf $2
@@ -45,7 +44,6 @@ travis_script() {
       MERGE_BASE=`wget -qO - https://api.github.com/repos/${TRAVIS_REPO_SLUG}/${PULL_REQUEST_ID} | jq -r ".base.sha"`
 
       git diff --name-only HEAD $MERGE_BASE > .pvs-pr.list
-      cat .pvs-pr.list
       pvs-studio-analyzer analyze -j8 -o PVS-Studio-${CC}.log --disableLicenseExpirationCheck -S .pvs-pr.list
     else
       pvs-studio-analyzer analyze -j8 -o PVS-Studio-${CC}.log --disableLicenseExpirationCheck
@@ -54,7 +52,6 @@ travis_script() {
     plog-converter -t errorfile PVS-Studio-${CC}.log --cerr -w
   fi
 }
-
 
 set -e
 set -x
