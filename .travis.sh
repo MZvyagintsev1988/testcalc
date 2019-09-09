@@ -45,6 +45,7 @@ travis_script() {
       MERGE_BASE=`wget -qO - https://api.github.com/repos/${TRAVIS_REPO_SLUG}/${PULL_REQUEST_ID} | jq -r ".base.sha"`
 
       git diff --name-only HEAD $MERGE_BASE > .pvs-pr.list
+      cat .pvs-pr.list
       pvs-studio-analyzer analyze -j8 -o PVS-Studio-${CC}.log --disableLicenseExpirationCheck -S .pvs-pr.list
     else
       pvs-studio-analyzer analyze -j8 -o PVS-Studio-${CC}.log --disableLicenseExpirationCheck
