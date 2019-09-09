@@ -54,7 +54,6 @@ travis_script() {
   fi
 }
 
-
 set -e
 set -x
 
