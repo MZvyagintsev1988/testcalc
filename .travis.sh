@@ -1,6 +1,5 @@
 #/bin/bash
 
-
 download_extract() {
   aria2c -x 16 $1 -o $2
   tar -xf $2
@@ -53,7 +52,6 @@ travis_script() {
     plog-converter -t errorfile PVS-Studio-${CC}.log --cerr -w
   fi
 }
-
 
 set -e
 set -x
