@@ -19,13 +19,13 @@ jobs:
           name: Compiling
           command: 'make'
 
-  pus-studio-analyze:
+  pvs-studio-analyze:
     docker:
       - image: "debian:stretch"
     steps:
       - run:
           name: Test
-          command: 'test; exit 2'
+          command: 'echo test; exit 2'
 
 
 workflows:
