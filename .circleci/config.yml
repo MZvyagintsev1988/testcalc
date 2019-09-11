@@ -10,13 +10,16 @@ jobs:
   flow:
     executor: main
     steps:
+      - run: ls -al
+      - checkout
+      - run: ls -al
       - run: mkdir -p workspace
-      - run: echo "Hello, world!" > workspace/echo-output
+      - run: cp main.cpp workspace/
       
       - persist_to_workspace:
           root: workspace
           paths:
-            - echo-output
+            - main.cpp
 
   downstream:
     executor: main
@@ -24,12 +27,7 @@ jobs:
       - attach_workspace:
           at: /tmp/workspace
 
-      - run: |
-          if [[ `cat /tmp/workspace/echo-output` == "Hello, world!" ]]; then
-            echo "It worked!";
-          else
-            echo "Nope!"; exit 1
-          fi
+      - run: cat main.cpp
 
 workflows:
   version: 2
