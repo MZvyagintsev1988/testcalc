@@ -3,7 +3,7 @@ version: 2.1
 executors:
   main:
     docker:
-            - image: buildpack-deps:stretch
+      - image: buildpack-deps:stretch
     working_directory: /tmp/workspace
 
 jobs:
@@ -31,7 +31,7 @@ jobs:
       - persist_to_workspace:
           root: /tmp/workspace
           paths: 
-            - topcalc
+            - ./*
 
   pvs-studio-install:
     executor: main
