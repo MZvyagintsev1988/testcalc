@@ -3,7 +3,7 @@ version: 2
 executors:
   main:
     docker:
-      - image: debian:stretch
+      - image: "debian:stretch"
 
 jobs:
   build:
