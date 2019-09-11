@@ -9,10 +9,10 @@ jobs:
 
       - run:
           name: Greeting
-          command: echo Hello, world.
+          command: echo Hello, world.;
                    echo Yeah;
-                   echo eeeee
-                   ls -al
+                   echo eeeee;
+                   ls -al;
 
       - run:
           name: Print the Current Time
