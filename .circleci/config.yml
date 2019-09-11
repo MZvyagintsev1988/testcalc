@@ -33,15 +33,12 @@ jobs:
           paths: 
             - ./*
 
-  pvs-studio-install:
+  pvs-studio:
     executor: main
     steps:
-      - run: pwd
-      - run: ls -al
-      - attach_workspace:
-          at: /tmp/workspace 
-      - run: pwd
-      - run: ls -al
+      - run:
+          name: Update repos
+          command: 'apt-get update'
       - run:
           name: Installing PVS-Studio
           command: 'apt-get install -y wget'
@@ -58,10 +55,6 @@ jobs:
       - run:
           name: Installing PVS-Studio
           command: 'apt-get install -y pvs-studio'
-
-  pvs-studio-analyze:
-    executor: main
-    steps:
       - run:
           name: Installing licence
           command: 'pvs-studio-analyzer credentials $PVS_USERNAME $PVS_KEY'
@@ -71,10 +64,7 @@ workflows:
   build-test:
     jobs:
       - build
-      - pvs-studio-install:
+      - pvs-studio:
           requires:
             - build
-      - pvs-studio-analyze:
-          requires:
-            - pvs-studio-install
 
