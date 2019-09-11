@@ -1,51 +1,83 @@
-# Note that the following stanza uses CircleCI 2.1 to make use of a Reusable Executor
-# This allows defining a docker image to reuse across jobs.
-# visit https://circleci.com/docs/2.0/reusing-config/#authoring-reusable-executors to learn more.
-
 version: 2.1
 
 executors:
-  my-executor:
+  main:
     docker:
-      - image: buildpack-deps:jessie
+      - image: "debian:stretch"
     working_directory: /tmp
 
 jobs:
-  flow:
-    executor: my-executor
+  build:
+    executor: main
     steps:
-      - run: mkdir -p workspace
-      - run: echo "Hello, world!" > workspace/echo-output
-      
-      # Persist the specified paths (workspace/echo-output) into the workspace for use in downstream job. 
+      - run: mkdir workspace
+      - run: cd workspace
+      - checkout
+      - run:
+          name: Update repos
+          command: 'apt-get update'
+      - run:
+          name: Installing GCC
+          command: 'apt-get install -y gcc g++'
+      - run:
+          name: Install CMAKE
+          command: 'apt-get install -y cmake'
+      - run:
+          name: Generating Makefiles
+          command: 'cmake .'
+      - run:
+          name: Compiling
+          command: 'make'
+      - run: pwd
+      - run: ls -al
+      - run: cd ..
       - persist_to_workspace:
-          # Must be an absolute path, or relative path from working_directory. This is a directory on the container which is 
-          # taken to be the root directory of the workspace.
           root: workspace
-          # Must be relative path from root
-          paths:
-            - echo-output
+          paths: 
+            - topcalc
 
-  downstream:
-    executor: my-executor
+  pvs-studio-install:
+    executor: main
     steps:
+      - run: pwd
+      - run: ls -al
       - attach_workspace:
-          # Must be absolute path or relative path from working_directory
-          at: /tmp/workspace
+          at: /tmp/workspace 
+      - run: pwd
+      - run: ls -al
+      - run:
+          name: Installing PVS-Studio
+          command: 'apt-get install -y wget'
+      - run:
+          name: Add apt-keys 
+          command: |
+            wget -q -O - https://files.viva64.com/etc/pubkey.txt \
+              | apt-key add -
+            wget -O /etc/apt/sources.list.d/viva64.list \
+              https://files.viva64.com/etc/viva64.list
+      - run:
+          name: Update repos
+          command: 'apt-get update'
+      - run:
+          name: Installing PVS-Studio
+          command: 'apt-get install -y pvs-studio'
 
-      - run: |
-          if [[ `cat /tmp/workspace/echo-output` == "Hello, world!" ]]; then
-            echo "It worked!";
-          else
-            echo "Nope!"; exit 1
-          fi
+  pvs-studio-analyze:
+    executor: main
+    steps:
+      - run:
+          name: Installing licence
+          command: 'pvs-studio-analyzer credentials $PVS_USERNAME $PVS_KEY'
+
 
 workflows:
-  version: 2
-
-  btd:
+  build-test:
     jobs:
-      - flow
-      - downstream:
+      - build
+      - pvs-studio-install:
           requires:
-            - flow
+            - build
+      - pvs-studio-analyze:
+          requires:
+            - pvs-studio-install
+
