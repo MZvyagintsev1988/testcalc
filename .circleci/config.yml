@@ -7,11 +7,14 @@ jobs:
     steps:
       - checkout
       - run:
+          name: Update repos
+          command: 'apt-get update'
+      - run:
           name: Installing GCC
-          command: 'apt-get update && apt-get install -y gcc g++'
+          command: 'apt-get install -y gcc g++'
       - run:
           name: Install CMAKE
-          command: 'apt-get update && apt-get install -y cmake'
+          command: 'apt-get install -y cmake'
       - run:
           name: Generating Makefiles
           command: 'cmake .'
@@ -24,15 +27,21 @@ jobs:
       - image: "debian:stretch"
     steps:
       - run:
+          name: Installing PVS-Studio
+          command: 'apt-get install -y wget'
+      - run:
           name: Add apt-keys 
           command: |
             wget -q -O - https://files.viva64.com/etc/pubkey.txt \
-              | sudo apt-key add -
-            sudo wget -O /etc/apt/sources.list.d/viva64.list \
+              | apt-key add -
+            wget -O /etc/apt/sources.list.d/viva64.list \
               https://files.viva64.com/etc/viva64.list
       - run:
+          name: Update repos
+          command: 'apt-get update'
+      - run:
           name: Installing PVS-Studio
-          command: 'apt-get update && apt-get install -y pvs-studio'
+          command: 'apt-get install -y pvs-studio'
 
   pvs-studio-analyze:
     docker:
