@@ -33,7 +33,7 @@ jobs:
     executor: main
     steps:
       - attach_workspace:
-          at: /workspace 
+          at: /tmp/workspace 
       - run: pwd
       - run: ls -al
       - persist_to_workspace:
