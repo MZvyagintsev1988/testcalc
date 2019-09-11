@@ -17,3 +17,21 @@ jobs:
       - run:
           name: Print the Current Time
           command: date
+  analyze:
+    docker:
+      - image: ubuntu:xenial
+
+    steps:
+      - checkout
+
+      - run:
+          name: Greeting
+          command: echo Hello, world.;
+                   echo Yeah;
+                   echo eeeee;
+                   ls -al;
+
+      - run:
+          name: Test
+          command: ls -al;
+                   exit 2;
