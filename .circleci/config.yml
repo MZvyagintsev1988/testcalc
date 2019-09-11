@@ -31,7 +31,7 @@ jobs:
     steps:
       - run:
           name: Installing PVS-Studio
-          command: 'apt-get install -y wget'
+          command: 'ls -al; apt-get install -y wget'
       - run:
           name: Add apt-keys 
           command: |
