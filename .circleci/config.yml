@@ -4,6 +4,7 @@ executors:
   main:
     docker:
       - image: "debian:stretch"
+    working_directory: /workspace/
 
 jobs:
   build:
@@ -28,8 +29,8 @@ jobs:
       - run: pwd
       - run: ls -al
       - persist_to_workspace:
-          root: ..
-          paths: .
+          root: workspace
+          paths: project
 
   pvs-studio-install:
     executor: main
