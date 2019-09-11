@@ -10,10 +10,6 @@ jobs:
   build:
     executor: main
     steps:
-      - persist_to_workspace:
-          root: /
-          paths: 
-            - workspace/*
       - checkout
       - run:
           name: Update repos
@@ -32,6 +28,10 @@ jobs:
           command: 'make'
       - run: pwd
       - run: ls -al
+      - persist_to_workspace:
+          root: /
+          paths: 
+            - workspace/*
 
   pvs-studio-install:
     executor: main
