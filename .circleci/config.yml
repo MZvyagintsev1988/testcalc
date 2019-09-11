@@ -1,13 +1,13 @@
 version: 2
 
 executors:
-  main:
+  my-shit:
     docker:
       - image: "debian:stretch"
 
 jobs:
   build:
-    executor: main
+    executor: my-shit
     steps:
       - checkout
       - run:
