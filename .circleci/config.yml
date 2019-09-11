@@ -29,9 +29,9 @@ jobs:
       - run: pwd
       - run: ls -al
       - persist_to_workspace:
-          root: /
+          root: /workspace
           paths: 
-            - workspace
+            - topcalc
 
   pvs-studio-install:
     executor: main
