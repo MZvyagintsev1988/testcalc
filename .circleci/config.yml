@@ -26,8 +26,6 @@ jobs:
       - run:
           name: Compiling
           command: 'make'
-      - run: pwd
-      - run: ls -al
       - persist_to_workspace:
           root: /tmp/workspace
           paths: 
@@ -40,8 +38,8 @@ jobs:
           name: Update repos
           command: 'apt-get update'
       - run:
-          name: Installing PVS-Studio
-          command: 'apt-get install -y wget'
+          name: Installing utils
+          command: 'apt-get install -y wget apt-transport-https'
       - run:
           name: Add apt-keys 
           command: |
