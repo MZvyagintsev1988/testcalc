@@ -30,7 +30,7 @@ jobs:
       - run: ls -al
       - persist_to_workspace:
           root: /workspace
-          paths: ../
+          paths: .
 
   pvs-studio-install:
     executor: main
