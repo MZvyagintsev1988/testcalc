@@ -3,36 +3,78 @@ version: 2.1
 executors:
   main:
     docker:
-      - image: "debian:stretch"
+      - image: buildpack-deps:jessie
     working_directory: /tmp/workspace
 
 jobs:
-  flow:
+  build:
     executor: main
     steps:
-      - run: ls -al
       - checkout
+      - run:
+          name: Update repos
+          command: 'apt-get update'
+      - run:
+          name: Installing GCC
+          command: 'apt-get install -y gcc g++'
+      - run:
+          name: Install CMAKE
+          command: 'apt-get install -y cmake'
+      - run:
+          name: Generating Makefiles
+          command: 'cmake .'
+      - run:
+          name: Compiling
+          command: 'make'
+      - run: pwd
       - run: ls -al
-      
       - persist_to_workspace:
           root: /tmp/workspace
-          paths:
-            - main.cpp
+          paths: 
+            - topcalc
 
-  downstream:
+  pvs-studio-install:
     executor: main
     steps:
+      - run: pwd
+      - run: ls -al
       - attach_workspace:
-          at: /tmp/workspace
+          at: /tmp/workspace 
+      - run: pwd
+      - run: ls -al
+      - run:
+          name: Installing PVS-Studio
+          command: 'apt-get install -y wget'
+      - run:
+          name: Add apt-keys 
+          command: |
+            wget -q -O - https://files.viva64.com/etc/pubkey.txt \
+              | apt-key add -
+            wget -O /etc/apt/sources.list.d/viva64.list \
+              https://files.viva64.com/etc/viva64.list
+      - run:
+          name: Update repos
+          command: 'apt-get update'
+      - run:
+          name: Installing PVS-Studio
+          command: 'apt-get install -y pvs-studio'
 
-      - run: cat main.cpp
+  pvs-studio-analyze:
+    executor: main
+    steps:
+      - run:
+          name: Installing licence
+          command: 'pvs-studio-analyzer credentials $PVS_USERNAME $PVS_KEY'
+
 
 workflows:
-  version: 2
-
-  btd:
+  build-test:
     jobs:
-      - flow
-      - downstream:
+      - build
+      - pvs-studio-install:
           requires:
-            - flow
+            - build
+      - pvs-studio-analyze:
+          requires:
+            - pvs-studio-install
+
