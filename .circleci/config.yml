@@ -28,16 +28,12 @@ jobs:
           command: 'make'
       - run: pwd
       - run: ls -al
-      - persist_to_workspace:
-          root: /
-          paths: 
-            - workspace/*
 
   pvs-studio-install:
     executor: main
     steps:
       - attach_workspace:
-          at: /
+          at: /workspace 
       - run: pwd
       - run: ls -al
       - persist_to_workspace:
