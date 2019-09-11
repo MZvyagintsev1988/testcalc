@@ -29,8 +29,8 @@ jobs:
       - run: pwd
       - run: ls -al
       - persist_to_workspace:
-          root: workspace
-          paths: project
+          root: /workspace
+          paths: /project
 
   pvs-studio-install:
     executor: main
