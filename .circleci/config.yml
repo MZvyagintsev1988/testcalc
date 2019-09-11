@@ -5,14 +5,15 @@ executors:
     docker:
       - image: "debian:stretch"
     working_directory: /workspace
-    persist_to_workspace:
-      root: /workspace
-      paths: .
 
 jobs:
   build:
     executor: main
     steps:
+      - persist_to_workspace:
+          root: /
+          paths: 
+            - workspace/*
       - checkout
       - run:
           name: Update repos
@@ -35,6 +36,10 @@ jobs:
   pvs-studio-install:
     executor: main
     steps:
+      - persist_to_workspace:
+          root: /
+          paths: 
+            - workspace/*
       - run: pwd
       - run: ls -al
       - run:
