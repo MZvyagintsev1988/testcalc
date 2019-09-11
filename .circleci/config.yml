@@ -1,9 +1,13 @@
 version: 2
 
+executors:
+  main:
+    docker:
+      - image: debian:stretch
+
 jobs:
   build:
-    docker:
-      - image: "debian:stretch"
+    executor: main
     steps:
       - checkout
       - run:
@@ -23,8 +27,7 @@ jobs:
           command: 'make'
 
   pvs-studio-install:
-    docker:
-      - image: "debian:stretch"
+    executor: main
     steps:
       - run:
           name: Installing PVS-Studio
@@ -44,8 +47,7 @@ jobs:
           command: 'apt-get install -y pvs-studio'
 
   pvs-studio-analyze:
-    docker:
-      - image: "debian:stretch"
+    executor: main
     steps:
       - run:
           name: Installing licence
