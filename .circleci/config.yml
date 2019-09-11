@@ -18,3 +18,22 @@ jobs:
       - run:
           name: Compiling
           command: 'make'
+
+  pus-studio-analyze:
+    docker:
+      - image: "debian:stretch"
+    steps:
+      - run:
+          name: Test
+          command: 'test; exit 2'
+
+
+workflows:
+  version: 2
+
+  build-test:
+    jobs:
+      - build
+      - pvs-studio-analyze:
+          requires:
+            - build
