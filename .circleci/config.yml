@@ -2,7 +2,7 @@ version: 2
 jobs:
   build:
     docker:
-      - image: debian:stretch
+      - image: ubuntu:xenial
 
     steps:
       - checkout
@@ -10,6 +10,9 @@ jobs:
       - run:
           name: Greeting
           command: echo Hello, world.
+                   echo Yeah;
+                   echo eeeee
+                   ls -al
 
       - run:
           name: Print the Current Time
