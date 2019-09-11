@@ -13,11 +13,9 @@ jobs:
       - run: ls -al
       - checkout
       - run: ls -al
-      - run: mkdir -p workspace2
-      - run: cp main.cpp workspace2/
       
       - persist_to_workspace:
-          root: workspace2
+          root: /tmp/workspace
           paths:
             - main.cpp
 
@@ -25,7 +23,7 @@ jobs:
     executor: main
     steps:
       - attach_workspace:
-          at: /tmp/workspace/workspace2
+          at: /tmp/workspace
 
       - run: cat main.cpp
 
