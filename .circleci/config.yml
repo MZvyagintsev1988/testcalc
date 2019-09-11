@@ -36,6 +36,8 @@ jobs:
   pvs-studio-install:
     executor: main
     steps:
+      - run: pwd
+      - run: ls -al
       - persist_to_workspace:
           root: /
           paths: 
