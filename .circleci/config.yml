@@ -19,13 +19,28 @@ jobs:
           name: Compiling
           command: 'make'
 
+  pvs-studio-install:
+    docker:
+      - image: "debian:stretch"
+    steps:
+      - run:
+          name: Add apt-keys 
+          command: |
+            wget -q -O - https://files.viva64.com/etc/pubkey.txt \
+              | sudo apt-key add -
+            sudo wget -O /etc/apt/sources.list.d/viva64.list \
+              https://files.viva64.com/etc/viva64.list
+      - run:
+          name: Installing PVS-Studio
+          command: 'apt-get update && apt-get install -y pvs-studio'
+
   pvs-studio-analyze:
     docker:
       - image: "debian:stretch"
     steps:
       - run:
-          name: Test
-          command: 'echo $PVS_KEY; exit 2'
+          name: Installing licence
+          command: 'pvs-studio-analyzer credentials $PVS_USERNAME $PVS_KEY'
 
 
 workflows:
@@ -34,7 +49,10 @@ workflows:
   build-test:
     jobs:
       - build
-      - pvs-studio-analyze:
+      - pvs-studio-install:
           requires:
             - build
+      - pvs-studio-analyze:
+          requires:
+            - pvs-studio-install
 
