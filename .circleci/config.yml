@@ -1,13 +1,13 @@
 version: 2.1
 
 executors:
-  mine:
+  main:
     docker:
       - image: "debian:stretch"
 
 jobs:
   build:
-    executor: mine
+    executor: main
     steps:
       - checkout
       - run:
