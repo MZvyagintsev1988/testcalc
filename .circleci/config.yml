@@ -35,6 +35,6 @@ workflows:
     jobs:
       - build
       - pvs-studio-analyze:
-          - requires:
-              - build
+          requires:
+            - build
 
