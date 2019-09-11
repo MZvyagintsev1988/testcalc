@@ -3,7 +3,7 @@ version: 2.1
 executors:
   main:
     docker:
-      - image: buildpack-deps:jessie
+            - image: buildpack-deps:stretch
     working_directory: /tmp/workspace
 
 jobs:
