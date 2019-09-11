@@ -4,7 +4,7 @@ executors:
   main:
     docker:
       - image: buildpack-deps:jessie
-    working_directory: /tmp
+    working_directory: /tmp/workspace
 
 jobs:
   flow:
@@ -13,11 +13,11 @@ jobs:
       - run: ls -al
       - checkout
       - run: ls -al
-      - run: mkdir -p workspace
-      - run: cp main.cpp workspace/
+      - run: mkdir -p workspace2
+      - run: cp main.cpp workspace2/
       
       - persist_to_workspace:
-          root: workspace
+          root: workspace2
           paths:
             - main.cpp
 
@@ -25,7 +25,7 @@ jobs:
     executor: main
     steps:
       - attach_workspace:
-          at: /tmp/workspace
+          at: /tmp/workspace/workspace2
 
       - run: cat main.cpp
 
