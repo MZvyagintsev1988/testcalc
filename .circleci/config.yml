@@ -22,7 +22,7 @@ jobs:
           command: 'apt-get install -y cmake'
       - run:
           name: Generating Makefiles
-          command: 'cmake .'
+          command: 'cmake -DCMAKE_EXPORT_COMPILE_COMMANDS=On .'
       - run:
           name: Compiling
           command: 'make'
