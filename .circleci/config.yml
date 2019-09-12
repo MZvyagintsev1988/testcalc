@@ -41,7 +41,7 @@ jobs:
           command: 'apt-get update'
       - run:
           name: Installing utils
-          command: 'apt-get install -y wget apt-transport-https jq'
+          command: 'apt-get install -y wget apt-transport-https jq git'
       - run:
           name: Add apt-keys 
           command: |
@@ -68,8 +68,8 @@ jobs:
             REPO_SLUG="${CIRCLE_PROJECT_USERNAME}/${CIRCLE_PROJECT_REPONAME}"
             MERGE_BASE=`wget -qO - https://api.github.com/repos/${REPO_SLUG}/${PULL_REQUEST_ID} | jq -r ".base.sha"`
 
-            # git diff --name-only HEAD $MERGE_BASE > .pvs-pr.lista
-            echo "${PULL_REQUEST}, ${REPO_SLUG}, ${MERGE_BASE}" 
+            git diff --name-only HEAD $MERGE_BASE > .pvs-pr.lista
+            echo "${PULL_REQUEST_ID}, ${REPO_SLUG}, ${MERGE_BASE}" 
       - run:
           name: Start PVS-Studioj
           command: 'pvs-studio-analyzer credentials $PVS_USERNAME $PVS_KEY'
