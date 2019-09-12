@@ -64,7 +64,7 @@ jobs:
       - run:
           name: Get Pull Request info
           command: |
-            # PULL_REQUEST_ID="pulls/${CIRCLE_PULL_REQUEST##*/}"
+            PULL_REQUEST_ID="pulls/${CIRCLE_PULL_REQUEST##*/}"
             # REPO_SLUG="${CIRCLE_PROJECT_REPONAME}/${CIRCLE_PROJECT_REPONAME}"
             # MERGE_BASE=`wget -qO - https://api.github.com/repos/${REPO_SLUG}/${PULL_REQUEST_ID} | jq -r ".base.sha"`
 
