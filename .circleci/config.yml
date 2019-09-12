@@ -4,7 +4,7 @@ executors:
   main:
     docker:
       - image: buildpack-deps:stretch
-    working_directory: $CIRCLE_WORKING_DIRECTORY
+    working_directory: /tmp/workspace
 
 jobs:
   build:
@@ -27,7 +27,7 @@ jobs:
           name: Compiling
           command: 'make'
       - persist_to_workspace:
-          root: $CIRCLE_WORKING_DIRECTORY
+          root: /tmp/workspace
           paths: 
             - ./*
 
@@ -35,7 +35,7 @@ jobs:
     executor: main
     steps:
       - attach_workspace:
-          at: $CIRCLE_WORKING_DIRECTORY
+          at: /tmp/workspace
       - run:
           name: Update repos
           command: 'apt-get update'
