@@ -65,8 +65,7 @@ jobs:
             REPO_SLUG="${CIRCLE_PROJECT_USERNAME}/${CIRCLE_PROJECT_REPONAME}"
             MERGE_BASE=`wget -qO - https://api.github.com/repos/${REPO_SLUG}/${PULL_REQUEST_ID} | jq -r ".base.sha"`
 
-            git diff --name-only HEAD $MERGE_BASE > .pvs-pr.lista
-      - run: ls -al
+            git diff --name-only HEAD $MERGE_BASE > .pvs-pr.list
       - run:
           name: Start PVS-Studio
           command: |
