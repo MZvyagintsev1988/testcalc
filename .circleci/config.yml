@@ -62,6 +62,7 @@ jobs:
           name: Installing licence
           command: 'pvs-studio-analyzer credentials $PVS_USERNAME $PVS_KEY'
       - run: 'echo $CIRCLE_PR_NUMBER and $CIRCLE_BRANCH'
+      - run: 'echo ${CIRCLE_PULL_REQUEST##*/}'
 
 
 workflows:
