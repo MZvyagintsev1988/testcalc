@@ -1,5 +1,3 @@
-# https://travis-ci.org
-
 language: cpp
 dist: xenial
 
@@ -15,9 +13,6 @@ addons:
 cache:
     directories:
       - .PVS-Studio/
-
-git:
-  fetch: false
 
 matrix:
   include:
