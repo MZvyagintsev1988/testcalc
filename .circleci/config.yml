@@ -4,7 +4,7 @@ executors:
   main:
     docker:
       - image: buildpack-deps:stretch
-    working_directory: /tmp/workspace
+    working_directory: $CIRCLE_WORKING_DIRECTORY
 
 jobs:
   build:
@@ -27,13 +27,15 @@ jobs:
           name: Compiling
           command: 'make'
       - persist_to_workspace:
-          root: /tmp/workspace
+          root: $CIRCLE_WORKING_DIRECTORY
           paths: 
             - ./*
 
   pvs-studio:
     executor: main
     steps:
+      - attach_workspace:
+          at: $CIRCLE_WORKING_DIRECTORY
       - run:
           name: Update repos
           command: 'apt-get update'
