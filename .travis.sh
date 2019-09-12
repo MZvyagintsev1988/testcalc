@@ -40,10 +40,7 @@ travis_script() {
     pvs-studio-analyzer credentials $PVS_USERNAME $PVS_KEY
     
     if [ "$TRAVIS_PULL_REQUEST" != "false" ]; then
-      PULL_REQUEST_ID="pulls/$TRAVIS_PULL_REQUEST"
-      MERGE_BASE=`wget -qO - https://api.github.com/repos/${TRAVIS_REPO_SLUG}/${PULL_REQUEST_ID} | jq -r ".base.sha"`
-
-      git diff --name-only HEAD $MERGE_BASE > .pvs-pr.list
+      git diff --name-only origin/HEAD > .pvs-pr.list
       pvs-studio-analyzer analyze -j8 -o PVS-Studio-${CC}.log --disableLicenseExpirationCheck -S .pvs-pr.list
     else
       pvs-studio-analyzer analyze -j8 -o PVS-Studio-${CC}.log --disableLicenseExpirationCheck
