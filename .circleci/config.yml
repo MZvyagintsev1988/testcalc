@@ -64,9 +64,9 @@ jobs:
             if [[ ! -z $CIRCLE_PULL_REQUEST ]] ; then
               PULL_REQUEST_ID="pulls/${CIRCLE_PULL_REQUEST##*/}"
               REPO_SLUG="${CIRCLE_PROJECT_USERNAME}/${CIRCLE_PROJECT_REPONAME}"
-              MERGE_BASE=`wget -qO - https://api.github.com/repos/${REPO_SLUG}/${PULL_REQUEST_ID} | jq -r ".base.sha"`
+              MERGE_BASE=`wget -qO - https://api.github.com/repos/${REPO_SLUG}/${PULL_REQUEST_ID} | jq -r ".base.ref"`
 
-              git diff --name-only HEAD $MERGE_BASE > .pvs-pr.list
+              git diff --name-only HEAD origin/$MERGE_BASE > .pvs-pr.list
             fi
       - run:
           name: Start PVS-Studio
