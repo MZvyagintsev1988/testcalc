@@ -64,11 +64,12 @@ jobs:
       - run:
           name: Get Pull Request info
           command: |
-            PULL_REQUEST_ID="pulls/${CIRCLE_PULL_REQUEST##*/}"
-            REPO_SLUG="${CIRCLE_PROJECT_REPONAME}/${CIRCLE_PROJECT_REPONAME}"
-            MERGE_BASE=`wget -qO - https://api.github.com/repos/${REPO_SLUG}/${PULL_REQUEST_ID} | jq -r ".base.sha"`
+            # PULL_REQUEST_ID="pulls/${CIRCLE_PULL_REQUEST##*/}"
+            # REPO_SLUG="${CIRCLE_PROJECT_REPONAME}/${CIRCLE_PROJECT_REPONAME}"
+            # MERGE_BASE=`wget -qO - https://api.github.com/repos/${REPO_SLUG}/${PULL_REQUEST_ID} | jq -r ".base.sha"`
 
-            #git diff --name-only HEAD $MERGE_BASE > .pvs-pr.lista
+            # git diff --name-only HEAD $MERGE_BASE > .pvs-pr.lista
+            echo "test"
       - run:
           name: Start PVS-Studioj
           command: 'pvs-studio-analyzer credentials $PVS_USERNAME $PVS_KEY'
