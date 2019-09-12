@@ -52,10 +52,14 @@ jobs:
           command: 'apt-get update'
       - run:
           name: Installing PVS-Studio
-          command: 'apt-get install -y pvs-studio'
+          command: 'apt-get install -y pvs-studio gcc'
       - run:
           name: Installing licence
           command: 'pvs-studio-analyzer credentials $PVS_USERNAME $PVS_KEY'
+      - run:
+          name: Installing licence
+          command: 'pvs-studio-analyzer credentials $PVS_USERNAME $PVS_KEY'
+      - run: 'echo $CIRCLE_PR_NUMBER and $CIRCLE_BRANCH'
 
 
 workflows:
