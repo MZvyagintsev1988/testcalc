@@ -16,6 +16,9 @@ cache:
     directories:
       - .PVS-Studio/
 
+git:
+  fetch: false
+
 matrix:
   include:
     - os: linux
