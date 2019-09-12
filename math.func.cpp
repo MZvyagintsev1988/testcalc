@@ -15,6 +15,7 @@
 // You should have received a copy of the GNU General Public License
 // along with Topcalc.  If not, see <http://www.gnu.org/licenses/>.
 
+
 #include "math.func.hpp"
 #include "error.hpp"
 #include "math.util.hpp"
