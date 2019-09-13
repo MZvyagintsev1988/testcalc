@@ -67,6 +67,7 @@ jobs:
               MERGE_BASE=`wget -qO - https://api.github.com/repos/${REPO_SLUG}/${PULL_REQUEST_ID} | jq -r ".base.ref"`
 
               git diff --name-only HEAD origin/$MERGE_BASE > .pvs-pr.list
+            fi
       - restore_cache:
           key: Get PVS-Studio cache
           paths:
