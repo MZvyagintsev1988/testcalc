@@ -1,0 +1,15 @@
+trigger:
+  pr:
+  - "*"
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+steps:
+- script: |
+    cmake .
+  displayName: 'Generate MakeFiles'
+
+- script: |
+    make
+  displayName: 'Build Project'
