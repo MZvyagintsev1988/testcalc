@@ -30,7 +30,7 @@
 #include <iostream>
 #include <limits>
 #include <locale>
-#include <experemental/filesystem>
+#include <experimental/filesystem>
 
 #include "error.hpp"
 #include "math.util.hpp"
