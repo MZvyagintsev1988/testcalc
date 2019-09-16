@@ -7,15 +7,16 @@ trigger:
   branches:
     exclude:
     - "*"
-  
-pool:
-  vmImage: 'ubuntu-latest'
 
 jobs:
 - job: A
+  pool:
+    vmImage: 'ubuntu-latest'
   steps:
   - bash: echo "A"
 
 - job: B
+  pool:
+    vmImage: 'ubuntu-latest'
   steps:
   - bash: echo "B"
