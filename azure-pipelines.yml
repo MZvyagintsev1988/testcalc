@@ -11,24 +11,15 @@ trigger:
 pool:
   vmImage: 'ubuntu-latest'
 
-jobs:
-- job: Build
-  steps:
-  - script: |
-      cmake .
-    displayName: 'Generate MakeFiles'
-  
-  - script: |
-      make
-    displayName: 'Build Project'
-
-- job: Analyze
-  steps:
-  - script: |
-      cmake .
-    displayName: 'Generate MakeFiles'
-  
-  - script: |
-      make
-    displayName: 'Build Project'
-
+stages:
+- stage: Build
+  jobs:
+  - job:
+      steps:
+      - script: |
+          cmake .
+        displayName: 'Generate MakeFiles'
+      
+      - script: |
+          make
+        displayName: 'Build Project'
