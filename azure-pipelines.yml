@@ -3,8 +3,10 @@ pr:
     include:
      - "*"
 
-push:
-  branches: none
+trigger:
+  branches:
+    exclude:
+    - "*"
   
 pool:
   vmImage: 'ubuntu-latest'
