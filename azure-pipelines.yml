@@ -3,6 +3,9 @@ pr:
     include:
      - "*"
 
+push:
+  branches: none
+  
 pool:
   vmImage: 'ubuntu-latest'
 
