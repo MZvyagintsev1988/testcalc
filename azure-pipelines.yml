@@ -22,4 +22,12 @@ jobs:
   pool:
     vmImage: 'ubuntu-latest'
   steps:
-  - bash: echo test
+  - task: DownloadPipelineArtifact@2
+    inputs:
+      artifactName: 'TestDate'
+      targetPath: $(Build.SourcesDirectory)
+  
+  - bash: date > testdate
+  
+  - publish: $(System.DefaultWorkingDirectory)/testdate
+    artifact: TestDate
