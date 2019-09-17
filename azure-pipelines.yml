@@ -22,4 +22,11 @@ jobs:
   pool:
     vmImage: 'ubuntu-latest'
   steps:
-  - bash: echo test
+  - download: current
+    artifact: WebApp
+  
+    patterns: 'testdate'
+  
+  - bash: date > testdate
+  - publish: $(System.DefaultWorkingDirectory)/testdate
+    artifact: TestDate
