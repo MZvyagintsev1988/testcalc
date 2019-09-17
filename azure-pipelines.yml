@@ -9,14 +9,17 @@ trigger:
     - "*"
 
 jobs:
-- job: A
+- job: build
+  displayName: Build
   pool:
     vmImage: 'ubuntu-latest'
   steps:
-  - bash: echo "A"
+  - bash: cmake -DCMAKE_EXPORT_COMPILE_COMMANDS=On .
+  - bash: make -j8
 
-- job: B
+- job: pvs_studio_analyze
+  displayName: PVS-Studio Analyze
   pool:
     vmImage: 'ubuntu-latest'
   steps:
-  - bash: echo "B"
+  - bash: echo test
