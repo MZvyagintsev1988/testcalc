@@ -25,7 +25,7 @@ jobs:
   - task: DownloadPipelineArtifact@2
     inputs:
       artifactName: 'TestDate'
-      targetPath: $(Build.SourcesDirectory)/testdate
+      targetPath: $(Build.SourcesDirectory)
   
   - bash: date > testdate
   
