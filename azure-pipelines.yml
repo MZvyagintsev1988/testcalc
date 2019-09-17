@@ -7,19 +7,19 @@ trigger:
   branches:
     exclude:
     - "*"
-  
-pool:
-  vmImage: 'ubuntu-latest'
 
-stages:
-- stage: Build
-  jobs:
-  - job:
-      steps:
-      - script: |
-          cmake .
-        displayName: 'Generate MakeFiles'
-      
-      - script: |
-          make
-        displayName: 'Build Project'
+jobs:
+- job: build
+  displayName: Build
+  pool:
+    vmImage: 'ubuntu-latest'
+  steps:
+  - bash: cmake -DCMAKE_EXPORT_COMPILE_COMMANDS=On .
+  - bash: make -j8
+
+- job: pvs_studio_analyze
+  displayName: PVS-Studio Analyze
+  pool:
+    vmImage: 'ubuntu-latest'
+  steps:
+  - bash: echo test
