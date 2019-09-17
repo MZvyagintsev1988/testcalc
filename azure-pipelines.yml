@@ -22,9 +22,10 @@ jobs:
   pool:
     vmImage: 'ubuntu-latest'
   steps:
-  - download: current
-    artifact: TestDate
-    patterns: 'testdate'
+  - task: DownloadPipelineArtifact@2
+    inputs:
+      artifactName: 'TestDate'
+      targetPath: $(Build.SourcesDirectory)/testdate
   
   - bash: date > testdate
   
