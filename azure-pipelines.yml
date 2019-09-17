@@ -23,10 +23,10 @@ jobs:
     vmImage: 'ubuntu-latest'
   steps:
   - download: current
-    artifact: WebApp
-  
+    artifact: TestDate
     patterns: 'testdate'
   
   - bash: date > testdate
+  
   - publish: $(System.DefaultWorkingDirectory)/testdate
     artifact: TestDate
