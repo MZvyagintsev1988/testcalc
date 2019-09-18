@@ -22,12 +22,10 @@ jobs:
   pool:
     vmImage: 'ubuntu-latest'
   steps:
-  - task: DownloadPipelineArtifact@2
+  - task: CacheBeta@0
+    displayName: Cache PVS-Studio
     inputs:
-      artifactName: 'TestDate'
-      targetPath: $(Build.SourcesDirectory)
+      key: pvs-studio-analyzer | $(Agent.OS)
+      path: $(Build.SourcesDirectory)/.PVS-Studio/
   
   - bash: date > testdate
-  
-  - publish: $(System.DefaultWorkingDirectory)/testdate
-    artifact: TestDate
