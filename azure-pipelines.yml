@@ -27,6 +27,7 @@ jobs:
     displayName: Cache PVS-Studio
     inputs:
       key: pvs-studio-analyzer | $(Agent.OS)
-      path: $(System.DefaultWorkingDirectory)/.PVS-Studio/
-  
+      path: $(System.DefaultWorkingDirectory)/testdate
+  - bash: cat testdate
   - bash: date > testdate
+  - bash: cat testdate
