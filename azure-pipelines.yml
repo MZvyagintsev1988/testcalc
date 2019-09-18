@@ -22,7 +22,7 @@ jobs:
   pool:
     vmImage: 'ubuntu-latest'
   steps:
-  - bash: touch testdate
+  
   - task: CacheBeta@0
     displayName: Cache PVS-Studio
     inputs:
