@@ -24,6 +24,7 @@ jobs:
   steps:
   - task: CacheBeta@0
     displayName: Cache PVS-Studio
+    securityNamespace: cache
     inputs:
       key: pvs-studio-analyzer | $(Agent.OS)
       path: $(Pipeline.Workspace)/.PVS-Studio/
