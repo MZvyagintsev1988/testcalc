@@ -26,6 +26,6 @@ jobs:
     displayName: Cache PVS-Studio
     inputs:
       key: pvs-studio-analyzer | $(Agent.OS)
-      path: $(Build.SourcesDirectory)/.PVS-Studio/
+      path: $(Pipeline.Workspace)/.PVS-Studio/
   
   - bash: date > testdate
