@@ -22,11 +22,11 @@ jobs:
   pool:
     vmImage: 'ubuntu-latest'
   steps:
-  - bash: echo $(Pipeline.Workspase) and $(pwd)
+  - bash: echo $(System.DefaultWorkingDirectory) and $(pwd)
   - task: CacheBeta@0
     displayName: Cache PVS-Studio
     inputs:
       key: pvs-studio-analyzer | $(Agent.OS)
-      path: $(Pipeline.Workspace)/.PVS-Studio/
+      path: $(System.DefaultWorkingDirectory)/.PVS-Studio/
   
   - bash: date > testdate
