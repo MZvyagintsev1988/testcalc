@@ -22,12 +22,12 @@ jobs:
   pool:
     vmImage: 'ubuntu-latest'
   steps:
-  
   - task: CacheBeta@0
     displayName: Cache PVS-Studio
     inputs:
-      key: pvs-studio-analyzer | $(Agent.OS)
-      path: $(System.DefaultWorkingDirectory)/.cache
+      key: 'pvs-studio-analyzer | $(Agent.OS)'
+      path: '$(System.DefaultWorkingDirectory)/.cache'
+      cacheHitVar: 'false'
   - bash: cat .cache/testdate
   - bash: date > .cache/testdate
   - bash: cat .cache/testdate
