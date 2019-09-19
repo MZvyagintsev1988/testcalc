@@ -25,7 +25,6 @@
  */
 
 
-
 #include <cctype>
 #include <exception>
 #include <iostream>
